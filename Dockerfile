@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # ৭. কন্টেইনার চালু হলে অ্যাপ রান করার কমান্ড
-CMD ["node", "server.js"]
+CMD ["node", "src/server.js"]
