@@ -13,6 +13,9 @@ RUN npm install
 # ۵. আমাদের লোকাল কম্পিউটারের বাকি সব কোড কন্টেইনারে কপি করছি
 COPY . .
 
+# Prisma client must be generated after schema files are copied
+RUN npm run build
+
 # ৬. অ্যাপটি ৩০০০ পোর্টে চলবে তা ডকারকে জানাচ্ছি
 EXPOSE 3000
 
