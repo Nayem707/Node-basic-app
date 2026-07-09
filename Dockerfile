@@ -1,5 +1,5 @@
 # ১. অফিশিয়াল Node.js ইমেজ ব্যবহার করছি
-FROM node:18-alpine
+FROM node:20-alpine
 
 # ২. কন্টেইনারের ভেতরে কাজের ফোল্ডার সেট করছি
 WORKDIR /usr/src/app
