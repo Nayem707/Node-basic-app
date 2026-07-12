@@ -1,6 +1,7 @@
-import 'dotenv/config';
-import { PrismaPg } from '@prisma/adapter-pg';
-import prismaPkg from '@prisma/client';
+// client.js
+import "dotenv/config";
+import { PrismaPg } from "@prisma/adapter-pg";
+import prismaPkg from "@prisma/client";
 
 const { PrismaClient } = prismaPkg;
 

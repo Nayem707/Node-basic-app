@@ -15,7 +15,13 @@
     "seed": "prisma db seed",
     "db:push": "prisma db push"
   },
-  "keywords": [],
+  "keywords": [
+    "node",
+    "express",
+    "prisma",
+    "postgresql",
+    "docker"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
