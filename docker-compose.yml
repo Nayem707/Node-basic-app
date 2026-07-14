@@ -1,4 +1,4 @@
-# version: "3.8"
+version: "3.8"
 
 services:
   # ডাটাবেজ সার্ভিস
@@ -10,11 +10,20 @@ services:
       POSTGRES_PASSWORD: mypassword
       POSTGRES_DB: mydatabase
     ports:
-      - "5455:5432" # আপনার লোকাল পিসির জন্য ৫৪৫৫, কিন্তু ভেতরের জন্য ৫৪৩২
+      - "5455:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  # আপনার নোড জেএস অ্যাপ সার্ভিস
+  # --- নতুন যোগ করা Redis সার্ভিস ---
+  redis_cache:
+    image: redis:alpine
+    container_name: node_redis_cache
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  # ---- আপনার নোড জেএস অ্যাপ সার্ভিস ----
   api_server:
     build: .
     container_name: node_api_server
@@ -22,13 +31,16 @@ services:
       - "3000:3000"
     environment:
       - PORT=3000
-      # 👇 এখানে ৫৪৩২ করা হয়েছে, যাতে ডকারের ভেতরে নোড অ্যাপটি ডাটাবেজকে খুঁজে পায়
       - DATABASE_URL=postgresql://myuser:mypassword@postgres_db:5432/mydatabase?schema=public
+      # এখানে Redis হোস্ট হিসেবে সার্ভিসের নাম (redis_cache) ব্যবহার করবেন
+      - REDIS_URL=redis://redis_cache:6379
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     depends_on:
       - postgres_db
+      - redis_cache
 
 volumes:
   postgres_data:
+  redis_data: # নতুন ভলিউম

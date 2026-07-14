@@ -1,4 +1,5 @@
 import request from "supertest";
+import { prisma } from "../src/config/client.js";
 import app from "../src/app.js";
 
 describe("API Should Run", () => {
@@ -26,4 +27,28 @@ describe("API Should Run", () => {
     expect(res.status).toBe(404);
     expect(res.body.success).toBe(false);
   });
+
+  test("GET /api/users should return all users", async () => {
+    const res = await request(app).get("/api/users");
+
+    expect(res.status).toBe(200);
+
+    expect(res.body.success).toBe(true);
+    expect(Array.isArray(res.body.data)).toBe(true);
+
+    if (res.body.data.length > 0) {
+      expect(res.body.data[0]).toMatchObject({
+        id: expect.any(Number),
+        name: expect.any(String),
+        email: expect.any(String),
+        createdAt: expect.any(String),
+        updatedAt: expect.any(String),
+        posts: expect.any(Array),
+      });
+    }
+  });
+});
+
+afterAll(async () => {
+  await prisma.$disconnect();
 });
