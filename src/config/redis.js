@@ -1,23 +1,24 @@
 import { createClient } from "redis";
 
-const redisUrl = process.env.REDIS_URL || "redis://localhost:6379";
+let redisUrl = process.env.REDIS_URL || "redis://localhost:6379";
 
-// যদি URL-এ upstash থাকে, তবেই TLS ব্যবহার করো
-const isUpstash = redisUrl.includes("upstash");
+// যদি Upstash হয়, তবে প্রোটোকল rediss:// নিশ্চিত করুন
+if (redisUrl.includes("upstash.io") && redisUrl.startsWith("redis://")) {
+  redisUrl = redisUrl.replace("redis://", "rediss://");
+}
 
 const redis = createClient({
   url: redisUrl,
-  socket: isUpstash
+  socket: redisUrl.startsWith("rediss://")
     ? {
         tls: true,
         rejectUnauthorized: false,
       }
-    : {}, // লোকাল ডকারের জন্য কোনো অপশন লাগবে না
+    : {},
 });
 
 redis.on("error", (err) => console.error("Redis Error:", err));
 
-// কানেকশন লজিক
 (async () => {
   try {
     await redis.connect();
