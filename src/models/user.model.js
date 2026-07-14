@@ -1,3 +1,5 @@
+// src/models/user.model.js
+
 import { prisma } from "../config/client.js";
 
 export class UserModel {

@@ -1,4 +1,4 @@
-// app.js
+// src/app.js
 import express from "express";
 import userRoutes from "./routes/user.routes.js";
 import { errorHandler } from "./middleware/error.middleware.js";

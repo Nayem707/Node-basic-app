@@ -1,3 +1,5 @@
+// src/controllers/user.controller.js
+
 import { UserModel } from "../models/user.model.js";
 
 const userModel = new UserModel();

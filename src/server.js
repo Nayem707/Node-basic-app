@@ -11,8 +11,7 @@ const startServer = async () => {
     // ১. ডাটাবেজ কানেক্ট হবে
     await connectDB();
 
-    // ২. Redis কানেক্ট হবে (যেহেতু redis.js এ await কানেক্ট আছে)
-    // এবং এটি অলরেডি কানেক্ট হতে শুরু করেছে, তাই এখানে শুধু কনফার্ম করা
+    // ২. Redis কানেক্ট হবে (যেহেতু await কানেক্ট আছে)
     console.log("🔍 Redis Connected Successfully");
 
     // ৩. সবশেষে সার্ভার লিসেন করবে
